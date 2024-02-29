@@ -1,0 +1,19 @@
+.component {
+    border: 5px solid rgb(0, 0, 0);
+    padding: 15px;
+    background-color: rgb(36, 35, 35);
+    color: rgb(176, 176, 176);
+    border-radius: 12px;
+
+    &>* {
+        line-height: 20px;
+        user-select: none;
+    }
+
+    .id {
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        width: 100%;
+    }
+}

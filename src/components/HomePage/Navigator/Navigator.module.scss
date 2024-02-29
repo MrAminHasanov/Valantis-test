@@ -1,0 +1,52 @@
+.component {
+    display: flex;
+    padding: 2em 0px;
+    align-items: center;
+    position: relative;
+
+    button {
+        outline: none;
+        border: none;
+        background-color: transparent;
+        color: white;
+        border-radius: 4px;
+        user-select: none;
+        cursor: pointer;
+    }
+
+    .prevButton,
+    .nextButton {
+        font-size: 22px;
+        position: absolute;
+    }
+
+    .prevButton {
+        transform: translateX(calc(-100% - 4px));
+    }
+
+    .nextButton {
+        left: calc(100% + 4px);
+    }
+
+    .pageButton {
+        padding: 6px 10px;
+        font-size: 18px;
+        transition: 0.5s ease background-color, 0.5s ease color;
+        margin: 0px 8px;
+        background-color: rgb(131, 114, 19);
+        color: rgb(176, 176, 176);
+
+        &:hover {
+            background-color: rgb(164, 143, 26);
+        }
+    }
+
+    .activeButton {
+        background-color: rgb(201, 176, 31);
+        color: white;
+
+        &:hover {
+            background-color: rgb(201, 176, 31);
+        }
+    }
+}
