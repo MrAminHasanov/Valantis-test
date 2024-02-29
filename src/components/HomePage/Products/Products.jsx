@@ -1,10 +1,11 @@
+import c from './Products.module.scss';
+
 import { useEffect } from 'react';
 import { useSelector } from 'react-redux';
 
 import { productsSelector, productsStatusSelector, useProductsActions } from '../../../store/feuters/products';
 import { productActivePageSelector, productFilterParamSelector } from '../../../store/feuters/product-filter/selectors';
 
-import c from './Products.module.scss';
 import Product from './Product/Product';
 import Loader from '../../Loader/Loader';
 import ErrorStatus from '../../ErrorStatus/ErrorStatus';
@@ -31,8 +32,9 @@ function Products() {
                         ? await getIds(activePage - 1)
                         : await getFilteredProductsIds(activePage - 1, productFilterParam);
 
-                getProducts(ids);
+                await getProducts(ids);
             } catch (error) {
+                console.log("products catch error");
                 console.error(error)
             }
         })()

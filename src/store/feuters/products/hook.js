@@ -15,7 +15,7 @@ export const useProductsActions = () => {
                 const newIds = new Set(await dispatch(getIdsThunk({ offset, limit: 55 })).unwrap());
 
                 for (let newId of newIds) {
-                    if (ids.size === 50) {
+                    if (ids.size === 5) {
                         setPageCount("unlimited");
                         return ids
                     } else {
@@ -49,12 +49,6 @@ export const useProductsActions = () => {
         }, [dispatch]
     )
 
-    const startProductsUpdate = useCallback(
-        () => {
-            dispatch(actions.setStatus("idle"));
-        }, [dispatch]
-    )
-
     const getFilteredProductsIds = useCallback(
         async (pageIndex, filterParam) => {
             try {
@@ -77,6 +71,12 @@ export const useProductsActions = () => {
                 throw error
             }
         }, [dispatch, setPageCount]
+    )
+
+    const startProductsUpdate = useCallback(
+        () => {
+            dispatch(actions.setStatus("idle"));
+        }, [dispatch]
     )
 
     return {

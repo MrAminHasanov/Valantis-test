@@ -1,5 +1,7 @@
-import { useState } from 'react';
 import c from './SearchBar.module.scss';
+
+import { useState } from 'react';
+
 import { useProductsFilterActions } from '../../../store/feuters/product-filter/hook';
 import { useProductsActions } from '../../../store/feuters/products';
 

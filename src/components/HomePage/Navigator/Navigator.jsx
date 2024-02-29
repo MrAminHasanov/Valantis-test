@@ -1,8 +1,10 @@
-import { useSelector } from "react-redux";
 import c from "./Navigator.module.scss";
-import { productActivePageSelector, productPageCountSelector, useProductsFilterActions } from "../../../store/feuters/product-filter";
+
+import { useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 import classNames from "classnames";
+
+import { productActivePageSelector, productPageCountSelector, useProductsFilterActions } from "../../../store/feuters/product-filter";
 import { productsStatusSelector, useProductsActions } from "../../../store/feuters/products";
 
 function Navigator() {
@@ -12,17 +14,18 @@ function Navigator() {
     const [pageListCounter, setPageListCounter] = useState(0);
     const [pageButtonCount, setPageButtonCount] = useState(4);
 
-    // console.log(pageCount);
+    const { setPageIndex } = useProductsFilterActions();
+    const { startProductsUpdate } = useProductsActions();
+
     useEffect(() => {
         setPageButtonCount(
             (pageCount === "unlimited" || pageCount > 3)
                 ? 4
                 : pageCount
-        )
-    }, [pageCount])
+        );
+        setPageIndex(1);
+    }, [pageCount, setPageIndex])
 
-    const { setPageIndex } = useProductsFilterActions();
-    const { startProductsUpdate } = useProductsActions();
 
     const prevButtonHandleClick = () => setPageListCounter((count) => --count);
     const nextButtonHandleClick = () => setPageListCounter((count) => ++count);
