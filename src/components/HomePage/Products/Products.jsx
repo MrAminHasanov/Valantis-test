@@ -34,7 +34,6 @@ function Products() {
 
                 await getProducts(ids);
             } catch (error) {
-                console.log("products catch error");
                 console.error(error)
             }
         })()

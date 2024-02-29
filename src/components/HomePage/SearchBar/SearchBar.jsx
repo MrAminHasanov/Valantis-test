@@ -9,7 +9,7 @@ function SearchBar() {
     const { setFilterParams } = useProductsFilterActions();
     const { startProductsUpdate } = useProductsActions();
 
-    const [price, setPrice] = useState("");
+    const [price, setPrice] = useState(0);
     const [product, setProduct] = useState("");
 
     const [activeParamKey, setActiveParamKey] = useState("");
@@ -21,7 +21,7 @@ function SearchBar() {
         setActiveParamKey("price")
     }
     const onProductChange = (e) => {
-        setPrice("");
+        setPrice(0);
         setProduct(e.target.value);
 
         setActiveParamKey("product")

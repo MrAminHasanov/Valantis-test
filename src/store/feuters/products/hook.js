@@ -15,7 +15,7 @@ export const useProductsActions = () => {
                 const newIds = new Set(await dispatch(getIdsThunk({ offset, limit: 55 })).unwrap());
 
                 for (let newId of newIds) {
-                    if (ids.size === 5) {
+                    if (ids.size === 50) {
                         setPageCount("unlimited");
                         return ids
                     } else {
@@ -60,7 +60,9 @@ export const useProductsActions = () => {
                 }
 
                 const sortedIds =
-                    new Set(Array.from(ids).slice(pageIndex * 50, (pageIndex + 1) * 50))
+                    new Set(
+                        Array.from(ids).slice(pageIndex * 50, (pageIndex + 1) * 50)
+                    )
 
                 const pageCount = Math.ceil(ids.size / 50);
                 setPageCount(pageCount);
