@@ -7,26 +7,27 @@ import { productsSelector, productsStatusSelector, useProductsActions } from '..
 import { productActivePageSelector, productFilterParamSelector } from '../../../store/feuters/product-filter/selectors';
 
 import Product from './Product/Product';
-import Loader from '../../Loader/Loader';
-import ErrorStatus from '../../ErrorStatus/ErrorStatus';
+import Loader from './Loader/Loader';
+import ErrorStatus from './ErrorStatus/ErrorStatus';
 
 function Products() {
-    const { getFilteredProductsIds, getIds, getProducts } = useProductsActions();
     const products = useSelector(productsSelector);
     const status = useSelector(productsStatusSelector);
     const activePage = useSelector(productActivePageSelector);
     const productFilterParam = useSelector(productFilterParamSelector);
 
+    const { getFilteredProductsIds, getIds, getProducts } = useProductsActions();
+
     useEffect(() => {
         (async () => {
-            try {
-                if (status === "loading" ||
-                    status === "error" ||
-                    status === "success" ||
-                    status === "Product not found") {
-                    return
-                }
+            if (status === "loading" ||
+                status === "error" ||
+                status === "success" ||
+                status === "Product not found") {
+                return
+            }
 
+            try {
                 const ids =
                     productFilterParam === null
                         ? await getIds(activePage - 1)
@@ -37,7 +38,8 @@ function Products() {
                 console.error(error)
             }
         })()
-    }, [getIds, getProducts, getFilteredProductsIds, status, activePage, productFilterParam])
+    }, [getIds, getProducts, getFilteredProductsIds,
+        status, activePage, productFilterParam])
 
     return (
         <div className={c.component}>
@@ -49,11 +51,13 @@ function Products() {
                             return <Loader status={status} />
                         }
                         case "Product not found":
-                        case "error": {
-                            return <ErrorStatus errorMesage={status} />
-                        }
+                        // case "error":
+                            {
+                                return <ErrorStatus errorMesage={status} />
+                            }
                         default: {
-                            return products.map((product) => <Product props={product} key={product.id} />)
+                            return products.map((product) =>
+                                <Product props={product} key={product.id} />)
                         }
                     }
                 })()

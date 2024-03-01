@@ -1,5 +1,5 @@
 import c from './ErrorStatus.module.scss'
-import { ReactComponent as ErrorIcon } from "../../img/warning.svg"
+import { ReactComponent as ErrorIcon } from "../../../../img/warning.svg"
 
 function ErrorStatus({ errorMesage }) {
 

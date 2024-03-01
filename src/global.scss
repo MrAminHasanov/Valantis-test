@@ -1,3 +1,5 @@
+@import url("./variables.scss");
+
 * {
     margin: 0px;
     padding: 0px;
@@ -7,7 +9,7 @@
 
 body {
     padding: 0px 5em;
-    background-color: rgb(7, 7, 17);
+    background: rgb(10, 10, 10);
 }
 
 html::-webkit-scrollbar {
@@ -18,3 +20,5 @@ html::-webkit-scrollbar {
         background-color: rgb(196, 168, 9);
     }
 }
+
+// #a86800

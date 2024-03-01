@@ -1,0 +1,31 @@
+.component {
+    width: 100vw;
+    height: 100vh;
+    position: fixed;
+    z-index: -1;
+
+    .whiteBall_1 {
+        width: 320px;
+        height: 320px;
+        border-radius: 50%;
+        background-color: rgb(46, 46, 46);
+        position: absolute;
+        filter: blur(32px);
+        opacity: 0.4;
+        left: 16%;
+        top: 30%;
+    }
+
+    .whiteBall_2 {
+        width: 30px;
+        height: 30px;
+        border-radius: 50%;
+        background-color: rgb(39, 39, 39);
+        position: absolute;
+        filter: blur(16px);
+        opacity: 0.4;
+        box-shadow: rgb(39, 39, 39) 1px -11px 142px 128px;
+        left: 70%;
+        top: 70%;
+    }
+}

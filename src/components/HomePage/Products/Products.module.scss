@@ -3,8 +3,7 @@
     display: grid;
     grid-template-columns: repeat(4, calc(25% - 20px));
     justify-content: space-evenly;
-    row-gap: 10px;
-    min-height: 90vh;
+    row-gap: 20px;
     column-gap: 30px;
     position: relative;
 }

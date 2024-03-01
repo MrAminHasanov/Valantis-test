@@ -2,7 +2,6 @@
     border: 5px solid rgb(0, 0, 0);
     padding: 15px;
     background-color: rgb(36, 35, 35);
-    color: rgb(176, 176, 176);
     border-radius: 12px;
 
     &>* {
@@ -10,10 +9,28 @@
         user-select: none;
     }
 
+    p {
+        color: rgb(176, 176, 176);
+        font-size: 18px;
+        text-align: left;
+        transition: .4s ease color;
+    }
+
     .id {
         overflow: hidden;
         white-space: nowrap;
         text-overflow: ellipsis;
         width: 100%;
+    }
+
+    button {
+        background-color: transparent;
+        border: none;
+        display: block;
+        cursor: pointer;
+
+        &>p:hover {
+            color: rgb(196, 169, 16);
+        }
     }
 }

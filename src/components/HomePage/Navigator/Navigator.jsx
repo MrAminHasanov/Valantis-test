@@ -8,7 +8,7 @@ import { productActivePageSelector, productPageCountSelector, useProductsFilterA
 import { productsStatusSelector, useProductsActions } from "../../../store/feuters/products";
 
 function Navigator() {
-    const idleStatus = useSelector(productsStatusSelector);
+    const status = useSelector(productsStatusSelector);
     const pageCount = useSelector(productPageCountSelector);
     const activePage = useSelector(productActivePageSelector);
     const [pageListCounter, setPageListCounter] = useState(0);
@@ -23,7 +23,9 @@ function Navigator() {
                 ? 4
                 : pageCount
         );
+        
         setPageIndex(1);
+        setPageListCounter(0);
     }, [pageCount, setPageIndex])
 
 
@@ -35,6 +37,11 @@ function Navigator() {
     };
 
     const getPageButtonClassNames = (buttonNumb) => classNames(c.pageButton, { [c.activeButton]: buttonNumb === activePage })
+
+    if (status !== "success") {
+        return null
+    }
+
     return (
         <div className={c.component}>
             {
@@ -53,7 +60,6 @@ function Navigator() {
                                     key={buttonNumb}
                                     onClick={() =>
                                         buttonNumb !== activePage &&
-                                        (idleStatus === "error" || idleStatus === "success") &&
                                         pageButtonHandleClick(buttonNumb)}
                                 >
                                     {buttonNumb}

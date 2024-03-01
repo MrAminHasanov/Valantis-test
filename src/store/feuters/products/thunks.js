@@ -10,10 +10,6 @@ export const getProductsThunk = createAsyncThunk(
     `${moduleName}/getProducts`, (userData, { rejectWithValue }) =>
     thunkFunct(userData, rejectWithValue, productApi.getProducts));
 
-export const getFieldsThunk = createAsyncThunk(
-    `${moduleName}/getFields`, (userData, { rejectWithValue }) =>
-    thunkFunct(userData, rejectWithValue, productApi.getFields));
-
 export const getFilteredProductsIdsThunk = createAsyncThunk(
     `${moduleName}/getFilteredProductsIds`, (userData, { rejectWithValue }) =>
     thunkFunct(userData, rejectWithValue, productApi.getFilteredProductsIds));
