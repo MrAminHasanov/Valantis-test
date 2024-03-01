@@ -51,7 +51,7 @@ function Products() {
                             return <Loader status={status} />
                         }
                         case "Product not found":
-                        // case "error":
+                        case "error":
                             {
                                 return <ErrorStatus errorMesage={status} />
                             }
