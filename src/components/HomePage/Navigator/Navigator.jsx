@@ -7,6 +7,8 @@ import classNames from "classnames";
 import { productActivePageSelector, productPageCountSelector, useProductsFilterActions } from "../../../store/feuters/product-filter";
 import { productsStatusSelector, useProductsActions } from "../../../store/feuters/products";
 
+import { statusConst } from "../../../store/statusConstants";
+
 function Navigator() {
     const status = useSelector(productsStatusSelector);
     const pageCount = useSelector(productPageCountSelector);
@@ -23,7 +25,7 @@ function Navigator() {
                 ? 4
                 : pageCount
         );
-        
+
         setPageIndex(1);
         setPageListCounter(0);
     }, [pageCount, setPageIndex])
@@ -38,7 +40,7 @@ function Navigator() {
 
     const getPageButtonClassNames = (buttonNumb) => classNames(c.pageButton, { [c.activeButton]: buttonNumb === activePage })
 
-    if (status !== "success") {
+    if (status !== statusConst.success) {
         return null
     }
 

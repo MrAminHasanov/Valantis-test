@@ -1,17 +1,17 @@
-import { moduleName } from "./slice";
+import { name } from "./slice";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { productApi } from "../../../api/productApi";
 
 export const getIdsThunk = createAsyncThunk(
-    `${moduleName}/getIds`, (userData, { rejectWithValue }) =>
+    `${name}/getIds`, (userData, { rejectWithValue }) =>
     thunkFunct(userData, rejectWithValue, productApi.getIds));
 
 export const getProductsThunk = createAsyncThunk(
-    `${moduleName}/getProducts`, (userData, { rejectWithValue }) =>
+    `${name}/getProducts`, (userData, { rejectWithValue }) =>
     thunkFunct(userData, rejectWithValue, productApi.getProducts));
 
 export const getFilteredProductsIdsThunk = createAsyncThunk(
-    `${moduleName}/getFilteredProductsIds`, (userData, { rejectWithValue }) =>
+    `${name}/getFilteredProductsIds`, (userData, { rejectWithValue }) =>
     thunkFunct(userData, rejectWithValue, productApi.getFilteredProductsIds));
 
 const thunkFunct = async (userData, rejectWithValue, apiFunct) => {

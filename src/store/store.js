@@ -1,6 +1,6 @@
 import { combineReducers, configureStore } from "@reduxjs/toolkit";
-import { reducer as productsReducer, moduleName as productsState } from './feuters/products'
-import { reducer as productFilterReducer, moduleName as productFilterState } from './feuters/product-filter'
+import { reducer as productsReducer, name as productsState } from './feuters/products'
+import { reducer as productFilterReducer, name as productFilterState } from './feuters/product-filter'
 
 const reducers = combineReducers({
     [productsState]: productsReducer,

@@ -1,18 +1,18 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { getFieldsThunk } from "./thunks";
 
-export const moduleName = "productFilter";
+import { statusConst } from "../../statusConstants";
 
 const initialState = {
     pageCount: "unlimited",
     activePage: 1,
     params: null,
-    brandsStatus: "idle",
+    brandsStatus: statusConst.idle,
     brands: []
 }
 
 const productsSlice = createSlice({
-    name: moduleName,
+    name: "productFilter",
     initialState,
     reducers: {
         setActivePage: (state, { payload }) => {
@@ -24,9 +24,6 @@ const productsSlice = createSlice({
         setPageCount: (state, { payload }) => {
             state.pageCount = payload;
         },
-        addBrands: (state, { payload }) => {
-            state.brands = payload;
-        },
         setBrandsStatus: (state, { payload }) => {
             state.brandsStatus = payload;
         }
@@ -34,19 +31,25 @@ const productsSlice = createSlice({
     extraReducers: builder => {
         builder
             .addCase(getFieldsThunk.pending, state => {
-                state.brandsStatus = "loading"
+                state.brandsStatus = statusConst.loading;
             })
-            .addCase(getFieldsThunk.fulfilled, state => {
-                state.brandsStatus = "success"
+            .addCase(getFieldsThunk.fulfilled, (state, { payload: newBrands }) => {
+                const prevBrands = state.brands;
+
+                const allBrands = prevBrands.concat(newBrands);
+                const allSortedBrands = new Set(allBrands);
+
+                state.brands = Array.from(allSortedBrands);
+                state.brandsStatus = statusConst.success;
             })
             .addCase(getFieldsThunk.rejected, (state, { payload }) => {
                 if (payload >= 500) {
-                    state.brandsStatus = "serverError"
+                    state.brandsStatus = statusConst.serverError;
                 } else {
-                    state.brandsStatus = "error"
+                    state.brandsStatus = statusConst.error;
                 }
             })
     }
 })
 
-export const { reducer, actions } = productsSlice;
+export const { reducer, actions, name } = productsSlice;

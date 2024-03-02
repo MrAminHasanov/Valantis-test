@@ -28,7 +28,6 @@ const getXAuth = () => {
 
 const fetchApi = async (action, params) => {
     try {
-
         const response = await fetch(URL, {
             headers: {
                 "X-Auth": getXAuth(),

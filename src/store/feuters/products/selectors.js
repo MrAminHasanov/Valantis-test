@@ -1,4 +1,7 @@
-import { moduleName } from "./slice";
+import { createSelector } from "@reduxjs/toolkit";
+import { name } from "./slice";
 
-export const productsSelector = ((state) => state[moduleName].products);
-export const productsStatusSelector = ((state) => state[moduleName].status);
+const stateSelector = (state) => state[name];
+
+export const productsSelector = createSelector(stateSelector, ({ products }) => products);
+export const productsStatusSelector = createSelector(stateSelector, ({ status }) => status);

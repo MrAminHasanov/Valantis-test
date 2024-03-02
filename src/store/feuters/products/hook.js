@@ -1,29 +1,39 @@
 import { useCallback } from "react"
 import { actions } from "./slice"
-import { getFilteredProductsIdsThunk, getIdsThunk, getProductsThunk } from "./thunks"
 import { useDispatch } from "react-redux";
+
+import { getFilteredProductsIdsThunk, getIdsThunk, getProductsThunk } from "./thunks"
 import { useProductsFilterActions } from "../product-filter/hook";
+
+import { statusConst } from "../../statusConstants";
 
 export const useProductsActions = () => {
     const dispatch = useDispatch();
     const { setPageCount } = useProductsFilterActions()
 
     const getIds = useCallback(
-        async (pageIndex, ids = new Set(), step = 0) => {
+        async (pageIndex) => {
             try {
-                const offset = (pageIndex + step) * 50;
-                const newIds = new Set(await dispatch(getIdsThunk({ offset, limit: 55 })).unwrap());
+                const ids = new Set([])
+                let step = 0;
 
-                for (let newId of newIds) {
-                    if (ids.size === 50) {
-                        setPageCount("unlimited");
-                        return ids
-                    } else {
-                        ids.add(newId);
+                while (ids.size !== 50) {
+                    const offset = (pageIndex + step) * 50;
+                    const newIds = await dispatch(getIdsThunk({ offset, limit: 54 })).unwrap();
+                    const uniqueNewIds = new Set(newIds)
+
+                    for (let newId of uniqueNewIds) {
+                        if (ids.size !== 50) {
+                            ids.add(newId);
+                        } else {
+                            break
+                        }
                     }
+                    ++step;
                 }
 
-                return getIds(pageIndex, ids, ++step);
+                setPageCount("unlimited");
+                return Array.from(ids);
             } catch (error) {
                 throw error
             }
@@ -33,15 +43,7 @@ export const useProductsActions = () => {
     const getProducts = useCallback(
         async (ids) => {
             try {
-                const products = await dispatch(getProductsThunk(Array.from(ids))).unwrap();
-                const filteredProducts = products.filter(({ id }) => {
-                    if (ids.has(id)) {
-                        ids.delete(id);
-                        return true
-                    } return false
-                })
-
-                dispatch(actions.setProducts(filteredProducts))
+                dispatch(getProductsThunk(ids));
             }
             catch (error) {
                 throw error
@@ -52,22 +54,17 @@ export const useProductsActions = () => {
     const getFilteredProductsIds = useCallback(
         async (pageIndex, filterParam) => {
             try {
-                const ids = new Set(await dispatch(getFilteredProductsIdsThunk(filterParam)).unwrap());
+                const ids = await dispatch(getFilteredProductsIdsThunk(filterParam)).unwrap();
+                if (ids.length === 0)
+                    throw new Error("Product not founded");
 
-                if (ids.size === 0) {
-                    dispatch(actions.setStatus("Product not found"));
-                    throw new Error("Product not found");
-                }
+                const uniqueIds = Array.from(new Set(ids));
+                const indexedPageIds = uniqueIds.slice(pageIndex * 50, (pageIndex + 1) * 50);
 
-                const sortedIds =
-                    new Set(
-                        Array.from(ids).slice(pageIndex * 50, (pageIndex + 1) * 50)
-                    )
-
-                const pageCount = Math.ceil(ids.size / 50);
+                const pageCount = Math.ceil(uniqueIds.length / 50);
                 setPageCount(pageCount);
 
-                return sortedIds
+                return indexedPageIds
             }
             catch (error) {
                 throw error
@@ -77,7 +74,7 @@ export const useProductsActions = () => {
 
     const startProductsUpdate = useCallback(
         () => {
-            dispatch(actions.setStatus("idle"));
+            dispatch(actions.setStatus(statusConst.idle));
         }, [dispatch]
     )
 

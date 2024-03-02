@@ -2,6 +2,7 @@ import { useCallback } from "react"
 import { actions } from "./slice"
 import { useDispatch } from "react-redux";
 import { getFieldsThunk } from "./thunks";
+import { statusConst } from "../../statusConstants";
 
 export const useProductsFilterActions = () => {
     const dispatch = useDispatch();
@@ -15,8 +16,6 @@ export const useProductsFilterActions = () => {
     const setFilterParams = useCallback(
         (filterParam) => {
             dispatch(actions.setFilterParams(filterParam));
-            dispatch(actions.setActivePage(1));
-
         }, [dispatch]
     )
 
@@ -27,16 +26,10 @@ export const useProductsFilterActions = () => {
     )
 
     const addBrands = useCallback(
-        async (offset, prevBrands) => {
+        async (offset) => {
             try {
                 const thunkParam = { field: "brand", offset, limit: 200 };
-                const newBrands = await dispatch(getFieldsThunk(thunkParam)).unwrap();
-
-                const allSortedBrands = Array.from(new Set(
-                    prevBrands.concat(newBrands)
-                ))
-                
-                dispatch(actions.addBrands(allSortedBrands));
+                dispatch(getFieldsThunk(thunkParam));
             }
             catch (error) {
                 throw error
@@ -46,7 +39,7 @@ export const useProductsFilterActions = () => {
 
     const startBrandsLoading = useCallback(
         async () => {
-            dispatch(actions.setBrandsStatus("idle"));
+            dispatch(actions.setBrandsStatus(statusConst.idle));
         }, [dispatch]
     )
 

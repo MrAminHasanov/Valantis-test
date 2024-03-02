@@ -1,4 +1,4 @@
 export * from "./thunks";
 export * from "./selectors"
-export { actions, reducer, moduleName } from "./slice";
+export { actions, reducer, name } from "./slice";
 export { useProductsActions } from "./hook";

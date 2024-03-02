@@ -7,7 +7,7 @@ import { useProductsActions } from '../../../store/feuters/products';
 import BrandDropDown from './BrandDropDown/BrandDropDown';
 
 function SearchBar() {
-    const { setFilterParams } = useProductsFilterActions();
+    const { setFilterParams, setPageIndex } = useProductsFilterActions();
     const { startProductsUpdate } = useProductsActions();
 
     const [price, setPrice] = useState("");
@@ -49,6 +49,7 @@ function SearchBar() {
                 : { [activeParamKey]: activeParam }
         );
 
+        setPageIndex(1);
         startProductsUpdate();
     }
 
