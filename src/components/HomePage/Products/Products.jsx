@@ -35,7 +35,9 @@ function Products() {
 
                 await getProducts(ids);
             } catch (error) {
-                console.error(error)
+                if (!isNaN(error)) {
+                    console.error(error)
+                }
             }
         })()
     }, [getIds, getProducts, getFilteredProductsIds,

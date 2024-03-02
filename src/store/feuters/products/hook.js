@@ -25,7 +25,6 @@ export const useProductsActions = () => {
 
                 return getIds(pageIndex, ids, ++step);
             } catch (error) {
-                console.log("ids error");
                 throw error
             }
         }, [dispatch, setPageCount]
@@ -35,7 +34,7 @@ export const useProductsActions = () => {
         async (ids) => {
             try {
                 const products = await dispatch(getProductsThunk(Array.from(ids))).unwrap();
-                const filteredProducts = await products.filter(({ id }) => {
+                const filteredProducts = products.filter(({ id }) => {
                     if (ids.has(id)) {
                         ids.delete(id);
                         return true
@@ -45,7 +44,6 @@ export const useProductsActions = () => {
                 dispatch(actions.setProducts(filteredProducts))
             }
             catch (error) {
-                console.log("prod error");
                 throw error
             }
         }, [dispatch]

@@ -11,7 +11,8 @@ export const getFieldsThunk = createAsyncThunk(
             return data.result
         }
         catch (error) {
-            return rejectWithValue(response.status)
+            console.error(error)
+            return rejectWithValue(response?.status ?? error)
         }
     }
 )

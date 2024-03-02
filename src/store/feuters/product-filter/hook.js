@@ -35,6 +35,7 @@ export const useProductsFilterActions = () => {
                 const allSortedBrands = Array.from(new Set(
                     prevBrands.concat(newBrands)
                 ))
+                
                 dispatch(actions.addBrands(allSortedBrands));
             }
             catch (error) {
@@ -48,6 +49,7 @@ export const useProductsFilterActions = () => {
             dispatch(actions.setBrandsStatus("idle"));
         }, [dispatch]
     )
+
     return {
         setPageIndex,
         setPageCount,

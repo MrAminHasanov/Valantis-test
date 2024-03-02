@@ -7,7 +7,7 @@ import DropDownLoader from "./DropDownLoader/DropDownLoader";
 
 function BrandDropDown({ activeBrand, setBrand }) {
     const [brandsLoadingOffset, setBrandsLoadingOffset] = useState(0);
-    const [listActive, setListActive] = useState(false);
+    const [isDropDownActive, setIsDropDownActive] = useState(false);
 
     const brands = useSelector(brandsSelector);
     const status = useSelector(brandsStatusSelector);
@@ -23,20 +23,22 @@ function BrandDropDown({ activeBrand, setBrand }) {
                     return
                 }
                 try {
-                    await addBrands(brandsLoadingOffset * 200, brands);
-                    setBrandsLoadingOffset(brandsLoadingOffset + 1);
+                    await addBrands(brandsLoadingOffset, brands);
+                    setBrandsLoadingOffset(brandsLoadingOffset + 200);
                 }
                 catch (error) {
-                    console.error(error)
+                    if (!isNaN(error)) {
+                        console.error(error)
+                    }
                 }
             }
         )()
     }, [status, addBrands, setBrandsLoadingOffset, brandsLoadingOffset, brands])
 
-    const activeBrandHandleClick = () => setListActive(!listActive);
+    const activeBrandHandleClick = () => setIsDropDownActive(!isDropDownActive);
     const brandElementHandleClick = (brand) => {
         setBrand(brand);
-        setListActive(false);
+        setIsDropDownActive(false);
     }
 
     return (
@@ -48,7 +50,8 @@ function BrandDropDown({ activeBrand, setBrand }) {
                         : activeBrand || "Все"
                 }
             </button>
-            <ul className={c.brandList} style={{ maxHeight: listActive ? "170px" : "0px" }} >
+
+            <ul className={c.brandList} style={{ maxHeight: isDropDownActive ? "170px" : "0px" }} >
                 <li className={c.brandElement}>
                     <button onClick={() => brandElementHandleClick("")}>
                         {"All"}
@@ -73,7 +76,7 @@ function BrandDropDown({ activeBrand, setBrand }) {
                             ? <DropDownLoader />
                             :
                             <button onClick={() => startBrandsLoading()}>
-                                Add more brands
+                                Add more
                             </button>
                     }
                 </li>
