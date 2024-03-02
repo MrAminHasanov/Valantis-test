@@ -41,7 +41,7 @@ const productsSlice = createSlice({
 export const { reducer, actions } = productsSlice;
 
 const thunkRejection = (state, { payload }) => {
-    if (payload >= 500) {
+    if (!isNaN(payload) && payload === 500) {
         state.status = "serverError"
     } else {
         state.status = "error"

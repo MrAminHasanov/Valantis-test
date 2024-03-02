@@ -27,16 +27,21 @@ const getXAuth = () => {
 }
 
 const fetchApi = async (action, params) => {
-    const response = await fetch(URL, {
-        headers: {
-            "X-Auth": getXAuth(),
-            "Content-Type": "application/json"
-        },
-        body: JSON.stringify({ action, params }),
-        method: "POST"
-    });
+    try {
 
-    return response
+        const response = await fetch(URL, {
+            headers: {
+                "X-Auth": getXAuth(),
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({ action, params }),
+            method: "POST"
+        });
+
+        return response
+    } catch (error) {
+        throw error
+    }
 }
 
 export const productApi = {
