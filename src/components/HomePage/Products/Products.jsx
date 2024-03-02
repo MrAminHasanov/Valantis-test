@@ -51,10 +51,9 @@ function Products() {
                             return <Loader status={status} />
                         }
                         case "Product not found":
-                        case "error":
-                            {
-                                return <ErrorStatus errorMesage={status} />
-                            }
+                        case "error": {
+                            return <ErrorStatus errorMesage={status} />
+                        }
                         default: {
                             return products.map((product) =>
                                 <Product props={product} key={product.id} />)
