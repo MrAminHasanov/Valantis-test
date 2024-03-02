@@ -22,6 +22,7 @@ const thunkFunct = async (userData, rejectWithValue, apiFunct) => {
         return data.result
     }
     catch (error) {
+        console.error(error)
         return rejectWithValue(response.status)
     }
 };
