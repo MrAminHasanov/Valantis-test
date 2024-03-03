@@ -38,7 +38,7 @@ const productsSlice = createSlice({
             .addCase(getFilteredProductsIdsThunk.fulfilled, (state, { payload: ids }) => {
                 if (ids.length === 0) {
                     state.status = statusConst.productNotFounded;
-                    state.statusMessage = "Product not found.Please search again with other param.";
+                    state.statusMessage = "Product not found. Please search again with different parameters.";
                 }
             })
             .addCase(getProductsThunk.fulfilled, (state, { payload: products }) => {
@@ -66,7 +66,7 @@ const thunkRejection = (state, { payload }) => {
         state.status = statusConst.serverError
     } else if (payload === "Failed to fetch") {
         state.status = statusConst.error;
-        state.statusMessage = "Request error.Allow your browser using unsecure content for this web for fixing error.";
+        state.statusMessage = "Request error. Allow your browser to use insecure content for this website to fix the error.";
     }
     else {
         state.status = statusConst.error;
