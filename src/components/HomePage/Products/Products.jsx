@@ -3,7 +3,7 @@ import c from './Products.module.scss';
 import { useEffect } from 'react';
 import { useSelector } from 'react-redux';
 
-import { productsSelector, productsStatusSelector, useProductsActions } from '../../../store/feuters/products';
+import { productsStatusMessageSelector, productsSelector, productsStatusSelector, useProductsActions } from '../../../store/feuters/products';
 import { productActivePageSelector, productFilterParamSelector } from '../../../store/feuters/product-filter/selectors';
 
 import { statusConst } from '../../../store/statusConstants';
@@ -17,7 +17,7 @@ function Products() {
     const status = useSelector(productsStatusSelector);
     const activePage = useSelector(productActivePageSelector);
     const productFilterParam = useSelector(productFilterParamSelector);
-
+    const statusMessage = useSelector(productsStatusMessageSelector);
     const { getFilteredProductsIds, getIds, getProducts } = useProductsActions();
 
     useEffect(() => {
@@ -33,6 +33,7 @@ function Products() {
                         ? await getIds(activePage - 1)
                         : await getFilteredProductsIds(activePage - 1, productFilterParam);
 
+                console.log("continue");
                 await getProducts(ids);
             } catch (error) {
                 if (!isNaN(error)) {
@@ -51,12 +52,12 @@ function Products() {
                         case statusConst.loading:
                         case statusConst.serverError:
                             {
-                                return <Loader status={status} />
+                                return <Loader status={statusMessage} />
                             }
                         case statusConst.productNotFounded:
                         case statusConst.error:
                             {
-                                return <ErrorStatus errorMesage={status} />
+                                return <ErrorStatus errorMesage={statusMessage} />
                             }
                         default: {
                             return products.map((product) =>

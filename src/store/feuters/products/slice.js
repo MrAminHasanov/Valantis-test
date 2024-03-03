@@ -6,6 +6,7 @@ import { statusConst } from "../../statusConstants";
 const initialState = {
     products: [],
     status: statusConst.idle,
+    statusMessage: ""
 }
 
 const productsSlice = createSlice({
@@ -20,9 +21,14 @@ const productsSlice = createSlice({
         builder
             .addCase(getIdsThunk.pending, state => {
                 state.status = statusConst.loading;
+                state.statusMessage = "Ids loading."
             })
             .addCase(getFilteredProductsIdsThunk.pending, state => {
                 state.status = statusConst.loading;
+                state.statusMessage = "Ids loading."
+            })
+            .addCase(getProductsThunk.pending, state => {
+                state.statusMessage = "Products loading."
             })
 
             .addCase(getIdsThunk.rejected, thunkRejection)
@@ -32,7 +38,7 @@ const productsSlice = createSlice({
             .addCase(getFilteredProductsIdsThunk.fulfilled, (state, { payload: ids }) => {
                 if (ids.length === 0) {
                     state.status = statusConst.productNotFounded;
-                    console.error(statusConst.productNotFounded);
+                    state.statusMessage = "Product not found.Please search again with other param.";
                 }
             })
             .addCase(getProductsThunk.fulfilled, (state, { payload: products }) => {
@@ -58,7 +64,12 @@ export const { reducer, actions, name } = productsSlice;
 const thunkRejection = (state, { payload }) => {
     if (!isNaN(payload) && payload === 500) {
         state.status = statusConst.serverError
-    } else {
-        state.status = statusConst.error
+    } else if (payload.message === "Failed to fetch.") {
+        state.status = statusConst.error;
+        state.errorMessage = "Request error.Allow your browser using unsecure content for this web for fixing error.";
+    }
+    else {
+        state.status = statusConst.error;
+        state.errorMessage = payload.message
     }
 }

@@ -39,7 +39,6 @@ const fetchApi = async (action, params) => {
 
         return response
     } catch (error) {
-        console.error(error.message === "Failed to fetch")
         throw error
     }
 }

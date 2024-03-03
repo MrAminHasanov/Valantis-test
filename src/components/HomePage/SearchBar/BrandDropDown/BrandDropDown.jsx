@@ -58,14 +58,14 @@ function BrandDropDown({ activeBrand, setBrand }) {
 
             <ul className={c.brandList} style={{ maxHeight: isDropDownActive ? "170px" : "0px" }} >
                 <li className={c.brandElement}>
-                    <button onClick={() => brandElementHandleClick("")}>
+                    <button type="button" onClick={() => brandElementHandleClick("")}>
                         {"All"}
                     </button>
                 </li>
                 {
                     brands.map((brand, i) =>
                         <li key={i} className={c.brandElement}>
-                            <button onClick={() => brandElementHandleClick(brand)}>
+                            <button type="button" onClick={() => brandElementHandleClick(brand)}>
                                 {brand || "not branded"}
                             </button>
                         </li>
@@ -80,7 +80,7 @@ function BrandDropDown({ activeBrand, setBrand }) {
                         )
                             ? <DropDownLoader />
                             :
-                            <button onClick={() => startBrandsLoading()}>
+                            <button type="button" onClick={() => startBrandsLoading()}>
                                 Add more
                             </button>
                     }
