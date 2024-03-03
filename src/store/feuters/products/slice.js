@@ -64,12 +64,12 @@ export const { reducer, actions, name } = productsSlice;
 const thunkRejection = (state, { payload }) => {
     if (!isNaN(payload) && payload === 500) {
         state.status = statusConst.serverError
-    } else if (payload.message === "Failed to fetch") {
+    } else if (payload === "Failed to fetch") {
         state.status = statusConst.error;
         state.statusMessage = "Request error.Allow your browser using unsecure content for this web for fixing error.";
     }
     else {
         state.status = statusConst.error;
-        state.statusMessage = payload.message
+        state.statusMessage = payload
     }
 }

@@ -18,14 +18,15 @@ function Products() {
     const activePage = useSelector(productActivePageSelector);
     const productFilterParam = useSelector(productFilterParamSelector);
     const statusMessage = useSelector(productsStatusMessageSelector);
+
     const { getFilteredProductsIds, getIds, getProducts } = useProductsActions();
 
     useEffect(() => {
         if (!(
             status === statusConst.serverError ||
-            status === statusConst.idle)) {
+            status === statusConst.idle
+        ))
             return
-        }
         (async () => {
             try {
                 const ids =

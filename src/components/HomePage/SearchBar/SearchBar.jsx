@@ -50,6 +50,10 @@ function SearchBar() {
                 : { [activeParamKey]: activeParam }
         );
 
+        setBrand("");
+        setProduct("");
+        setPrice("");
+
         setPageIndex(1);
         startProductsUpdate();
     }
