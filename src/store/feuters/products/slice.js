@@ -66,10 +66,10 @@ const thunkRejection = (state, { payload }) => {
         state.status = statusConst.serverError
     } else if (payload.message === "Failed to fetch.") {
         state.status = statusConst.error;
-        state.errorMessage = "Request error.Allow your browser using unsecure content for this web for fixing error.";
+        state.statusMessage = "Request error.Allow your browser using unsecure content for this web for fixing error.";
     }
     else {
         state.status = statusConst.error;
-        state.errorMessage = payload.message
+        state.statusMessage = payload.message
     }
 }

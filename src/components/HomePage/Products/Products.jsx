@@ -33,7 +33,6 @@ function Products() {
                         ? await getIds(activePage - 1)
                         : await getFilteredProductsIds(activePage - 1, productFilterParam);
 
-                console.log("continue");
                 await getProducts(ids);
             } catch (error) {
                 if (!isNaN(error)) {
