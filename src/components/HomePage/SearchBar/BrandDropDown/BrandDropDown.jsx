@@ -1,9 +1,14 @@
-import { useSelector } from "react-redux"
 import c from "./BrandDropDown.module.scss"
+
+import { useSelector } from "react-redux"
+import { useEffect, useState } from "react";
+
 import { brandsSelector, brandsStatusSelector } from "../../../../store/feuters/product-filter/selectors"
 import { useProductsFilterActions } from "../../../../store/feuters/product-filter/hook";
-import { useEffect, useState } from "react";
+
 import DropDownLoader from "./DropDownLoader/DropDownLoader";
+
+import { statusConst } from "../../../../store/statusConstants";
 
 function BrandDropDown({ activeBrand, setBrand }) {
     const [brandsLoadingOffset, setBrandsLoadingOffset] = useState(0);
@@ -17,9 +22,9 @@ function BrandDropDown({ activeBrand, setBrand }) {
     useEffect(() => {
         (
             async () => {
-                if (status === "loading" ||
-                    status === "error" ||
-                    status === "success") {
+                if (status === statusConst.loading ||
+                    status === statusConst.error ||
+                    status === statusConst.success) {
                     return
                 }
                 try {
@@ -43,7 +48,7 @@ function BrandDropDown({ activeBrand, setBrand }) {
 
     return (
         <div className={c.component}>
-            <button onClick={activeBrandHandleClick} className={c.activeBrand}>
+            <button onClick={activeBrandHandleClick} type="button" className={c.activeBrand}>
                 {
                     activeBrand === null
                         ? "not branded"
@@ -69,9 +74,9 @@ function BrandDropDown({ activeBrand, setBrand }) {
                 <li className={c.addBrandList}>
                     {
                         (
-                            status === "idle" ||
-                            status === "loading" ||
-                            status === "serverError"
+                            status === statusConst.idle ||
+                            status === statusConst.loading ||
+                            status === statusConst.serverError
                         )
                             ? <DropDownLoader />
                             :

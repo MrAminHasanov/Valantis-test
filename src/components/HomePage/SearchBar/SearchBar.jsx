@@ -40,7 +40,8 @@ function SearchBar() {
         setActiveParamKey("product");
     }
 
-    const onHandleSearchClick = () => {
+    const onSearchSubmit = (e) => {
+        e.preventDefault();
         const activeParam = price || product || brand;
 
         setFilterParams(
@@ -54,7 +55,7 @@ function SearchBar() {
     }
 
     return (
-        <div className={c.component}>
+        <form className={c.component} onSubmit={onSearchSubmit}>
             <BrandDropDown activeBrand={brand} setBrand={onBrandClick} />
             <input
                 type='number'
@@ -69,8 +70,8 @@ function SearchBar() {
                 onChange={onProductChange}
                 placeholder='Названия'
                 value={product} />
-            <button className={c.searchButton} onClick={onHandleSearchClick}>поиск</button>
-        </div>
+            <button className={c.searchButton} type="submit" >поиск</button>
+        </form>
     )
 }
 
