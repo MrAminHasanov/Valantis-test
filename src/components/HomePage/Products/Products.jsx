@@ -1,48 +1,21 @@
 import c from './Products.module.scss';
-
-import { useEffect } from 'react';
 import { useSelector } from 'react-redux';
 
-import { productsStatusMessageSelector, productsSelector, productsStatusSelector, useProductsActions } from '../../../store/feuters/products';
-import { productActivePageSelector, productFilterParamSelector } from '../../../store/feuters/product-filter/selectors';
+import { productsStatusMessageSelector, productsSelector, productsStatusSelector } from '../../../store/feuters/products';
 
 import { statusConst } from '../../../store/statusConstants';
 
 import Product from './Product/Product';
 import Loader from './Loader/Loader';
 import ErrorStatus from './ErrorStatus/ErrorStatus';
+import useProductsUpload from '../../../hook/useProductsUpload';
 
 function Products() {
     const products = useSelector(productsSelector);
     const status = useSelector(productsStatusSelector);
-    const activePage = useSelector(productActivePageSelector);
-    const productFilterParam = useSelector(productFilterParamSelector);
     const statusMessage = useSelector(productsStatusMessageSelector);
 
-    const { getFilteredProductsIds, getIds, getProducts } = useProductsActions();
-
-    useEffect(() => {
-        if (!(
-            status === statusConst.serverError ||
-            status === statusConst.idle
-        ))
-            return
-        (async () => {
-            try {
-                const ids =
-                    productFilterParam === null
-                        ? await getIds(activePage - 1)
-                        : await getFilteredProductsIds(activePage - 1, productFilterParam);
-
-                await getProducts(ids);
-            } catch (error) {
-                if (!isNaN(error)) {
-                    console.error(error)
-                }
-            }
-        })()
-    }, [getIds, getProducts, getFilteredProductsIds,
-        status, activePage, productFilterParam])
+    useProductsUpload();
 
     return (
         <div className={c.component}>
@@ -51,8 +24,9 @@ function Products() {
                     switch (status) {
                         case statusConst.loading:
                         case statusConst.serverError:
+                        case statusConst.startUpdate:
                             {
-                                return <Loader status={statusMessage} />
+                                return <Loader loadingMessage={statusMessage} />
                             }
                         case statusConst.productNotFounded:
                         case statusConst.error:
@@ -66,7 +40,6 @@ function Products() {
                     }
                 })()
             }
-
         </div>
     )
 }

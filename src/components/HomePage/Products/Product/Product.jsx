@@ -4,37 +4,27 @@ import { useProductsActions } from "../../../../store/feuters/products"
 import { useProductsFilterActions } from "../../../../store/feuters/product-filter"
 
 function Product({ props: { id, brand, price, product } }) {
+    const { setFilterParams, setPageIndex } = useProductsFilterActions();
+    const { setUpdateStatus } = useProductsActions();
 
-    const { setFilterParams,setPageIndex } = useProductsFilterActions();
-    const { startProductsUpdate } = useProductsActions();
+    const handleButtonClick = (paramKey, param) => {
+        setFilterParams({ [paramKey]: param });
+        setPageIndex(1);
 
-    const handleProductClick = () => {
-        setFilterParams({ product });
-        setPageIndex(1);
-        startProductsUpdate();
-    }
-    const handleBrandClick = () => {
-        setFilterParams({ brand });
-        setPageIndex(1);
-        startProductsUpdate();
-    }
-    const handlePriceClick = () => {
-        setFilterParams({ price });
-        setPageIndex(1);
-        startProductsUpdate();
+        setUpdateStatus();
     }
 
     return (
         <div className={c.component}>
-            <button onClick={handleProductClick}>
+            <button onClick={() => handleButtonClick("product", product)}>
                 <p>Продкут: {product}.</p>
             </button>
             <br />
             <p className={c.id}>ИД: {id}</p>
-            <button onClick={handleBrandClick}>
+            <button onClick={() => handleButtonClick("brand", brand)}>
                 <p>Брэнд: {brand || "Отсутсвует"}</p>
             </button>
-            <button onClick={handlePriceClick}>
+            <button onClick={() => handleButtonClick("price", price)}>
                 <p>Цена: {price}</p>
             </button>
         </div>

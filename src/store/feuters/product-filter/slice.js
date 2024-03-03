@@ -4,7 +4,7 @@ import { getFieldsThunk } from "./thunks";
 import { statusConst } from "../../statusConstants";
 
 const initialState = {
-    pageCount: "unlimited",
+    pageCount: 160,
     activePage: 1,
     params: null,
     brandsStatus: statusConst.idle,

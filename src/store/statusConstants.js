@@ -4,5 +4,6 @@ export const statusConst = {
     success: "success",
     productNotFounded: "Product not founded",
     serverError: "server error",
-    idle: "idle"
+    idle: "idle",
+    startUpdate: "start update"
 }

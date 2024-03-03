@@ -32,23 +32,12 @@ export const useProductsActions = () => {
                     ++step;
                 }
 
-                setPageCount("unlimited");
+                setPageCount(160);
                 return Array.from(ids);
             } catch (error) {
                 throw error
             }
         }, [dispatch, setPageCount]
-    )
-
-    const getProducts = useCallback(
-        async (ids) => {
-            try {
-                dispatch(getProductsThunk(ids));
-            }
-            catch (error) {
-                throw error
-            }
-        }, [dispatch]
     )
 
     const getFilteredProductsIds = useCallback(
@@ -72,16 +61,28 @@ export const useProductsActions = () => {
         }, [dispatch, setPageCount]
     )
 
-    const startProductsUpdate = useCallback(
+    const startProductsUpload = useCallback(
+        async (ids) => {
+            try {
+                dispatch(getProductsThunk(ids));
+            }
+            catch (error) {
+                throw error
+            }
+        }, [dispatch]
+    )
+
+
+    const setUpdateStatus = useCallback(
         () => {
-            dispatch(actions.setStatus(statusConst.idle));
+            dispatch(actions.setStatus(statusConst.startUpdate));
         }, [dispatch]
     )
 
     return {
-        getProducts,
+        startProductsUpload,
         getFilteredProductsIds,
-        getIds,
-        startProductsUpdate
+        getIds, 
+        setUpdateStatus
     }
 }

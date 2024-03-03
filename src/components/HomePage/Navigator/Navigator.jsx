@@ -17,11 +17,11 @@ function Navigator() {
     const [pageButtonCount, setPageButtonCount] = useState(4);
 
     const { setPageIndex } = useProductsFilterActions();
-    const { startProductsUpdate } = useProductsActions();
+    const { setUpdateStatus } = useProductsActions();
 
     useEffect(() => {
         setPageButtonCount(
-            (pageCount === "unlimited" || pageCount > 3)
+            pageCount > 3
                 ? 4
                 : pageCount
         );
@@ -35,7 +35,7 @@ function Navigator() {
     const nextButtonHandleClick = () => setPageListCounter((count) => ++count);
     const pageButtonHandleClick = (pageIndex) => {
         setPageIndex(pageIndex);
-        startProductsUpdate();
+        setUpdateStatus();
     };
 
     const getPageButtonClassNames = (buttonNumb) => classNames(c.pageButton, { [c.activeButton]: buttonNumb === activePage })
@@ -76,7 +76,6 @@ function Navigator() {
 
             {
                 (
-                    pageCount === "unlimited" ||
                     (pageListCounter + 4) < pageCount
                 ) &&
                 <button onClick={nextButtonHandleClick} className={c.nextButton}>{`>`}</button>

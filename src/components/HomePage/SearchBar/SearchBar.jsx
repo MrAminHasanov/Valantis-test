@@ -8,7 +8,7 @@ import BrandDropDown from './BrandDropDown/BrandDropDown';
 
 function SearchBar() {
     const { setFilterParams, setPageIndex } = useProductsFilterActions();
-    const { startProductsUpdate } = useProductsActions();
+    const { setUpdateStatus } = useProductsActions();
 
     const [price, setPrice] = useState("");
     const [product, setProduct] = useState("");
@@ -50,12 +50,8 @@ function SearchBar() {
                 : { [activeParamKey]: activeParam }
         );
 
-        setBrand("");
-        setProduct("");
-        setPrice("");
-
         setPageIndex(1);
-        startProductsUpdate();
+        setUpdateStatus();
     }
 
     return (

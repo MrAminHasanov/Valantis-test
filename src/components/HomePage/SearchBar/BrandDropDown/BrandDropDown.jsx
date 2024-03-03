@@ -28,7 +28,7 @@ function BrandDropDown({ activeBrand, setBrand }) {
                     return
                 }
                 try {
-                    await addBrands(brandsLoadingOffset, brands);
+                    await addBrands(brandsLoadingOffset);
                     setBrandsLoadingOffset(brandsLoadingOffset + 200);
                 }
                 catch (error) {
@@ -38,7 +38,7 @@ function BrandDropDown({ activeBrand, setBrand }) {
                 }
             }
         )()
-    }, [status, addBrands, setBrandsLoadingOffset, brandsLoadingOffset, brands])
+    }, [status, addBrands, setBrandsLoadingOffset, brandsLoadingOffset])
 
     const activeBrandHandleClick = () => setIsDropDownActive(!isDropDownActive);
     const brandElementHandleClick = (brand) => {

@@ -1,7 +1,6 @@
 import c from "./Loader.module.scss"
 
-function Loader({ status }) {
-    const loadingMessage = status;
+function Loader({ loadingMessage }) {
 
     return (
         <div className={c.component}>
