@@ -11,10 +11,10 @@ export const useProductsActions = () => {
     const dispatch = useDispatch();
     const { setPageCount } = useProductsFilterActions()
 
-    const getIds = useCallback(
+    const getDefaulteProductsIds = useCallback(
         async (pageIndex) => {
             try {
-                const ids = new Set([])
+                const ids = new Set()
                 let step = 0;
 
                 while (ids.size !== 50) {
@@ -47,6 +47,7 @@ export const useProductsActions = () => {
                 if (ids.length === 0)
                     throw new Error("Product not founded");
 
+
                 const uniqueIds = Array.from(new Set(ids));
                 const indexedPageIds = uniqueIds.slice(pageIndex * 50, (pageIndex + 1) * 50);
 
@@ -61,6 +62,17 @@ export const useProductsActions = () => {
         }, [dispatch, setPageCount]
     )
 
+    const getIds = useCallback(
+        async (activePage, filterParam) => {
+            const isFilterActive = filterParam !== null;
+            if (isFilterActive) {
+                return await getFilteredProductsIds(activePage - 1, filterParam)
+            } else {
+                return await getDefaulteProductsIds(activePage - 1);
+            }
+        }, [getDefaulteProductsIds, getFilteredProductsIds]
+    )
+
     const startProductsUpload = useCallback(
         async (ids) => {
             try {
@@ -73,7 +85,7 @@ export const useProductsActions = () => {
     )
 
 
-    const setUpdateStatus = useCallback(
+    const setProductsUpdateStatus = useCallback(
         () => {
             dispatch(actions.setStatus(statusConst.startUpdate));
         }, [dispatch]
@@ -81,8 +93,7 @@ export const useProductsActions = () => {
 
     return {
         startProductsUpload,
-        getFilteredProductsIds,
-        getIds, 
-        setUpdateStatus
+        setProductsUpdateStatus,
+        getIds
     }
 }

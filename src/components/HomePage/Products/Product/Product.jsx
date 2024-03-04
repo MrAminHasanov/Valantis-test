@@ -5,13 +5,13 @@ import { useProductsFilterActions } from "../../../../store/feuters/product-filt
 
 function Product({ props: { id, brand, price, product } }) {
     const { setFilterParams, setPageIndex } = useProductsFilterActions();
-    const { setUpdateStatus } = useProductsActions();
+    const { setProductsUpdateStatus } = useProductsActions();
 
     const handleButtonClick = (paramKey, param) => {
         setFilterParams({ [paramKey]: param });
         setPageIndex(1);
 
-        setUpdateStatus();
+        setProductsUpdateStatus();
     }
 
     return (

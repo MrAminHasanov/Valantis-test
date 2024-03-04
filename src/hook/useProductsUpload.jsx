@@ -11,9 +11,9 @@ const useProductsUpload = () => {
     const status = useSelector(productsStatusSelector);
 
     const activePage = useSelector(productActivePageSelector);
-    const productFilterParam = useSelector(productFilterParamSelector);
+    const filterParam = useSelector(productFilterParamSelector);
 
-    const { getFilteredProductsIds, getIds, startProductsUpload } = useProductsActions();
+    const { getIds, startProductsUpload } = useProductsActions();
 
     useEffect(() => {
         if (!(
@@ -24,12 +24,7 @@ const useProductsUpload = () => {
             return
         (async () => {
             try {
-                const isFilterActive = productFilterParam !== null;
-                const ids =
-                    isFilterActive
-                        ? await getFilteredProductsIds(activePage - 1, productFilterParam)
-                        : await getIds(activePage - 1);
-
+                const ids = await getIds(activePage, filterParam);
                 await startProductsUpload(ids);
             } catch (error) {
                 if (!isNaN(error)) {
@@ -38,8 +33,11 @@ const useProductsUpload = () => {
             }
         })()
     },
-        [getIds, startProductsUpload, getFilteredProductsIds,
-            status, activePage, productFilterParam])
+        [
+            getIds, startProductsUpload,
+            status, activePage, filterParam
+        ]
+    )
 }
 
 export default useProductsUpload

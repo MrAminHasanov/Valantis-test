@@ -34,9 +34,9 @@ const productsSlice = createSlice({
                 state.brandsStatus = statusConst.loading;
             })
             .addCase(getFieldsThunk.fulfilled, (state, { payload: newBrands }) => {
-                const prevBrands = state.brands;
+                const curentBrands = state.brands;
 
-                const allBrands = prevBrands.concat(newBrands);
+                const allBrands = curentBrands.concat(newBrands);
                 const allSortedBrands = new Set(allBrands);
 
                 state.brands = Array.from(allSortedBrands);

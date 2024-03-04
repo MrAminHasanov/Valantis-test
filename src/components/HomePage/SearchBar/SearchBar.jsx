@@ -5,44 +5,29 @@ import { useState } from 'react';
 import { useProductsFilterActions } from '../../../store/feuters/product-filter/hook';
 import { useProductsActions } from '../../../store/feuters/products';
 import BrandDropDown from './BrandDropDown/BrandDropDown';
+import useBrandsUpload from '../../../hook/useBrandsUpload';
+
+export const paramKeys = { price: "price", brand: "brand", product: "product" }
 
 function SearchBar() {
     const { setFilterParams, setPageIndex } = useProductsFilterActions();
-    const { setUpdateStatus } = useProductsActions();
+    const { setProductsUpdateStatus } = useProductsActions();
 
-    const [price, setPrice] = useState("");
-    const [product, setProduct] = useState("");
-    const [brand, setBrand] = useState("");
-
+    const [activeParam, setActiveParam] = useState("");
     const [activeParamKey, setActiveParamKey] = useState("");
 
-    const onPriceChange = (e) => {
-        setBrand("");
-        setProduct("");
-        setPrice(Number(e.target.value));
+    const getValue = (paramKey, defaultValue) =>
+        activeParamKey === paramKey
+            ? activeParam
+            : defaultValue;
 
-        setActiveParamKey("price");
-    }
-
-    const onBrandClick = (brand) => {
-        setProduct("");
-        setPrice("");
-        setBrand(brand);
-
-        setActiveParamKey("brand");
-    }
-
-    const onProductChange = (e) => {
-        setPrice("");
-        setBrand("");
-        setProduct(e.target.value);
-
-        setActiveParamKey("product");
+    const onParamChange = (newActiveParam, newActiveParamKey) => {
+        setActiveParam(newActiveParam);
+        setActiveParamKey(newActiveParamKey);
     }
 
     const onSearchSubmit = (e) => {
         e.preventDefault();
-        const activeParam = price || product || brand;
 
         setFilterParams(
             activeParam === ""
@@ -50,27 +35,31 @@ function SearchBar() {
                 : { [activeParamKey]: activeParam }
         );
 
+        setActiveParam("");
+        setActiveParamKey("");
         setPageIndex(1);
-        setUpdateStatus();
+        setProductsUpdateStatus();
     }
+
+    useBrandsUpload()
 
     return (
         <form className={c.component} onSubmit={onSearchSubmit}>
-            <BrandDropDown activeBrand={brand} setBrand={onBrandClick} />
+            <BrandDropDown getValue={getValue} onParamChange={onParamChange} />
             <input
                 type='number'
                 className={c.priceInput}
-                onChange={onPriceChange}
+                onChange={(e) => onParamChange(Number(e.target.value), paramKeys.price)}
                 placeholder='Цена'
                 min={0}
-                value={price} />
+                value={getValue(paramKeys.price, 0)} />
             <input
                 type="text"
                 className={c.nameInput}
-                onChange={onProductChange}
+                onChange={(e) => onParamChange(e.target.value, paramKeys.product)}
                 placeholder='Названия'
-                value={product} />
-            <button className={c.searchButton} type="submit" >поиск</button>
+                value={getValue(paramKeys.product, "")} />
+            <button className={c.searchButton} type="submit">поиск</button>
         </form>
     )
 }

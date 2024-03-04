@@ -1,7 +1,7 @@
 import c from "./BrandDropDown.module.scss"
 
 import { useSelector } from "react-redux"
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 import { brandsSelector, brandsStatusSelector } from "../../../../store/feuters/product-filter/selectors"
 import { useProductsFilterActions } from "../../../../store/feuters/product-filter/hook";
@@ -10,39 +10,22 @@ import DropDownLoader from "./DropDownLoader/DropDownLoader";
 
 import { statusConst } from "../../../../store/statusConstants";
 
-function BrandDropDown({ activeBrand, setBrand }) {
-    const [brandsLoadingOffset, setBrandsLoadingOffset] = useState(0);
+import { paramKeys } from "../SearchBar";
+import BrandButton from "./BrandButton/BrandButton";
+
+function BrandDropDown({ onParamChange, getValue }) {
     const [isDropDownActive, setIsDropDownActive] = useState(false);
 
     const brands = useSelector(brandsSelector);
     const status = useSelector(brandsStatusSelector);
 
-    const { startBrandsLoading, addBrands } = useProductsFilterActions();
+    const activeBrand = getValue(paramKeys.brand, "");
 
-    useEffect(() => {
-        (
-            async () => {
-                if (status === statusConst.loading ||
-                    status === statusConst.error ||
-                    status === statusConst.success) {
-                    return
-                }
-                try {
-                    await addBrands(brandsLoadingOffset);
-                    setBrandsLoadingOffset(brandsLoadingOffset + 200);
-                }
-                catch (error) {
-                    if (!isNaN(error)) {
-                        console.error(error)
-                    }
-                }
-            }
-        )()
-    }, [status, addBrands, setBrandsLoadingOffset, brandsLoadingOffset])
+    const { startBrandsLoading } = useProductsFilterActions();
 
     const activeBrandHandleClick = () => setIsDropDownActive(!isDropDownActive);
     const brandElementHandleClick = (brand) => {
-        setBrand(brand);
+        onParamChange(brand, paramKeys.brand)
         setIsDropDownActive(false);
     }
 
@@ -55,20 +38,18 @@ function BrandDropDown({ activeBrand, setBrand }) {
                         : activeBrand || "Все"
                 }
             </button>
-
-            <ul className={c.brandList} style={{ maxHeight: isDropDownActive ? "170px" : "0px" }} >
-                <li className={c.brandElement}>
-                    <button type="button" onClick={() => brandElementHandleClick("")}>
-                        {"All"}
-                    </button>
-                </li>
+            <ul
+                className={c.brandList}
+                style={{ maxHeight: isDropDownActive ? "170px" : "0px" }} >
+                <BrandButton
+                    brandElementHandleClick={() => brandElementHandleClick("")}
+                    buttonContent={"All"} />
                 {
                     brands.map((brand, i) =>
-                        <li key={i} className={c.brandElement}>
-                            <button type="button" onClick={() => brandElementHandleClick(brand)}>
-                                {brand || "not branded"}
-                            </button>
-                        </li>
+                        <BrandButton
+                            key={i}
+                            brandElementHandleClick={() => brandElementHandleClick(brand)}
+                            buttonContent={brand || "not branded"} />
                     )
                 }
                 <li className={c.addBrandList}>
