@@ -1,0 +1,29 @@
+.component {
+    width: 100%;
+    top: calc(100% + 1px);
+    position: absolute;
+    background-color: rgb(76, 76, 76);
+    list-style: none;
+    z-index: 2;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    transition: 0.8s ease max-height;
+
+    &::-webkit-scrollbar {
+        width: 2px;
+        background-color: transparent;
+
+        &-thumb {
+            background-color: rgb(205, 205, 205);
+        }
+    }
+
+
+    .addBrand {
+        align-items: center;
+        min-height: 40px;
+        display: flex;
+        align-items: center;
+        justify-content: space-evenly;
+    }
+}

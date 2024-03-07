@@ -29,7 +29,7 @@ function Products() {
                                 return <Loader loadingMessage={statusMessage} />
                             }
                         case statusConst.productNotFounded:
-                        // case statusConst.error:
+                        case statusConst.error:
                             {
                                 return <ErrorStatus errorMesage={statusMessage} />
                             }

@@ -12,7 +12,7 @@ export const getFieldsThunk = createAsyncThunk(
         }
         catch (error) {
             console.error(error)
-            return rejectWithValue(response?.status ?? error)
+            return rejectWithValue(response?.status ?? error.message)
         }
     }
 )

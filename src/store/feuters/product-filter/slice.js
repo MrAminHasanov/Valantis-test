@@ -6,7 +6,7 @@ import { statusConst } from "../../statusConstants";
 const initialState = {
     pageCount: 160,
     activePage: 1,
-    params: null,
+    params: { product: "" },
     brandsStatus: statusConst.idle,
     brands: []
 }

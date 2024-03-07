@@ -45,7 +45,7 @@ const fetchApi = async (action, params) => {
 
 export const productApi = {
     getIds: (params) => fetchApi("get_ids", params),
-    getProducts: (ids) => fetchApi("get_items", { ids }),
+    getProducts: (params) => fetchApi("get_items", params),
     getFields: (params) => fetchApi("get_fields", params),
     getFilteredProductsIds: (params) => fetchApi("filter", params)
 }

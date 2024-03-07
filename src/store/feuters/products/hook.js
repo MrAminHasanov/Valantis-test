@@ -64,7 +64,11 @@ export const useProductsActions = () => {
 
     const getIds = useCallback(
         async (activePage, filterParam) => {
-            const isFilterActive = filterParam !== null;
+            const filterParamValue = Object.values(filterParam)[0]
+            const isFilterActive =
+                filterParamValue !== 0 &&
+                filterParamValue !== ""
+
             if (isFilterActive) {
                 return await getFilteredProductsIds(activePage - 1, filterParam)
             } else {
@@ -76,7 +80,7 @@ export const useProductsActions = () => {
     const startProductsUpload = useCallback(
         async (ids) => {
             try {
-                dispatch(getProductsThunk(ids));
+                dispatch(getProductsThunk({ ids }));
             }
             catch (error) {
                 throw error

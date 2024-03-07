@@ -28,6 +28,7 @@ const productsSlice = createSlice({
                 state.statusMessage = "Ids loading."
             })
             .addCase(getProductsThunk.pending, state => {
+                state.status = statusConst.loading;
                 state.statusMessage = "Products loading."
             })
 
@@ -66,7 +67,7 @@ const thunkRejection = (state, { payload }) => {
         state.status = statusConst.serverError
     } else if (payload === "Failed to fetch") {
         state.status = statusConst.error;
-        state.statusMessage = "Request error. Allow your browser to use insecure content for this website to fix the error.";
+        state.statusMessage = "Internet conection failed"
     }
     else {
         state.status = statusConst.error;
