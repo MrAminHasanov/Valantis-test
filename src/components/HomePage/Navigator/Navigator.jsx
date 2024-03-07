@@ -11,8 +11,10 @@ import { statusConst } from "../../../store/statusConstants";
 
 function Navigator() {
     const status = useSelector(productsStatusSelector);
+
     const pageCount = useSelector(productPageCountSelector);
     const activePage = useSelector(productActivePageSelector);
+
     const [pageListCounter, setPageListCounter] = useState(0);
     const [pageButtonCount, setPageButtonCount] = useState(4);
 
@@ -33,12 +35,14 @@ function Navigator() {
 
     const prevButtonHandleClick = () => setPageListCounter((count) => --count);
     const nextButtonHandleClick = () => setPageListCounter((count) => ++count);
+
     const pageButtonHandleClick = (pageIndex) => {
         setPageIndex(pageIndex);
         setProductsUpdateStatus();
     };
 
-    const getPageButtonClassNames = (buttonNumb) => classNames(c.pageButton, { [c.activeButton]: buttonNumb === activePage })
+    const getPageButtonClassNames = (isActivePage) =>
+        classNames(c.pageButton, { [c.activeButton]: isActivePage })
 
     if (status !== statusConst.success) {
         return null
@@ -56,14 +60,15 @@ function Navigator() {
                         const arr = [];
                         for (let i = 1; i <= pageButtonCount; ++i) {
                             const buttonNumb = pageListCounter + i;
+                            const isActivePage = buttonNumb === activePage;
+
                             arr.push(
                                 <button
-                                    className={getPageButtonClassNames(buttonNumb)}
+                                    className={getPageButtonClassNames(isActivePage)}
                                     key={buttonNumb}
                                     onClick={() =>
-                                        buttonNumb !== activePage &&
-                                        pageButtonHandleClick(buttonNumb)}
-                                >
+                                        !isActivePage &&
+                                        pageButtonHandleClick(buttonNumb)}>
                                     {buttonNumb}
                                 </button>
                             )
@@ -73,11 +78,8 @@ function Navigator() {
                     })()
                 }
             </div>
-
             {
-                (
-                    (pageListCounter + 4) < pageCount
-                ) &&
+                (pageListCounter + 4) < pageCount &&
                 <button onClick={nextButtonHandleClick} className={c.nextButton}>{`>`}</button>
             }
         </div >
