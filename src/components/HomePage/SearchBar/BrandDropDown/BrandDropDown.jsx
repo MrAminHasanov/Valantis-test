@@ -23,7 +23,7 @@ function BrandDropDown({ onParamChange, filterParam }) {
                 {
                     activeBrand === null
                         ? "not branded"
-                        : activeBrand || "Все"
+                        : activeBrand || "All"
                 }
             </button>
             <BrandList

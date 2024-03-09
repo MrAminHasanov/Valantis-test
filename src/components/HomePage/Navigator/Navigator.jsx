@@ -44,11 +44,7 @@ function Navigator() {
     const getPageButtonClassNames = (isActivePage) =>
         classNames(c.pageButton, { [c.activeButton]: isActivePage })
 
-    if (status !== statusConst.success) {
-        return null
-    }
-
-    return (
+    return status === statusConst.success && (
         <div className={c.component}>
             {
                 pageListCounter > 0 &&

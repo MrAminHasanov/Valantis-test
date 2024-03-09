@@ -39,7 +39,7 @@ export const useProductsFilterActions = () => {
 
     const startBrandsLoading = useCallback(
         async () => {
-            dispatch(actions.setBrandsStatus(statusConst.idle));
+            dispatch(actions.setBrandsStatus(statusConst.startUpdate));
         }, [dispatch]
     )
 

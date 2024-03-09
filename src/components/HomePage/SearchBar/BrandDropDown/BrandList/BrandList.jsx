@@ -1,7 +1,7 @@
 import c from './BrandList.module.scss'
 
 import { useSelector } from 'react-redux';
-import { useCallback, useEffect } from 'react';
+import { useCallback } from 'react';
 
 import { brandsSelector, brandsStatusSelector } from '../../../../../store/feuters/product-filter/selectors';
 import { useProductsFilterActions } from '../../../../../store/feuters/product-filter/hook';
@@ -43,7 +43,8 @@ function BrandList({ onParamChange, setIsDropDownActive, isDropDownActive }) {
                     (
                         status === statusConst.idle ||
                         status === statusConst.loading ||
-                        status === statusConst.serverError
+                        status === statusConst.serverError ||
+                        status === statusConst.startUpdate
                     )
                         ?
                         <DropDownLoader />

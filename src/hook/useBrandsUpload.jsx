@@ -16,9 +16,11 @@ const useBrandsUpload = () => {
     useEffect(() => {
         (
             async () => {
-                if (status === statusConst.loading ||
-                    status === statusConst.error ||
-                    status === statusConst.success)
+                if (!(
+                    status === statusConst.serverError ||
+                    status === statusConst.idle ||
+                    status === statusConst.startUpdate
+                ))
                     return
 
                 try {
