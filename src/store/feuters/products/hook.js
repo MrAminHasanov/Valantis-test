@@ -84,7 +84,7 @@ export const useProductsActions = () => {
     const startProductsUpload = useCallback(
         async (ids) => {
             try {
-                dispatch(getProductsThunk({ ids }));
+                await dispatch(getProductsThunk({ ids })).unwrap();
             }
             catch (error) {
                 throw error
