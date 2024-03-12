@@ -68,11 +68,15 @@ export const useProductsActions = () => {
             const isFilterActive =
                 filterParamValue !== 0 &&
                 filterParamValue !== ""
-
-            if (isFilterActive) {
-                return await getFilteredProductsIds(activePage - 1, filterParam)
-            } else {
-                return await getDefaulteProductsIds(activePage - 1);
+            try {
+                if (isFilterActive) {
+                    return await getFilteredProductsIds(activePage - 1, filterParam)
+                } else {
+                    return await getDefaulteProductsIds(activePage - 1);
+                }
+            }
+            catch (error) {
+                throw error
             }
         }, [getDefaulteProductsIds, getFilteredProductsIds]
     )
