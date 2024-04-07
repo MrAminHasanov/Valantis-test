@@ -1,6 +1,6 @@
-//Project Initialization:
-npm i
-npm start
+//Project Initialization:  
+npm i  
+npm start  
 
 //Project Description:
 Test task for a vacancy from the company [Valantis](https://hh.ru/employer/5241283?hhtmFrom=vacancy). The project includes implementing a search engine for jewelry items from an API provided in the task documentation (documentation for working with the API was provided). Additionally, a simple error handling and message loading system, as well as pagination for the list of products, were implemented. All API requests were wrapped in asyncThunk.
